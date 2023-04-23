@@ -56,5 +56,5 @@ resource "helm_release" "nginx_ingress" {
 
   values = [var.nginx_ingress_values]
 
-  depends_on = [module.eks.cluster_id, kubernetes_namespace.cluster_system]
+  depends_on = [module.eks.cluster_id]
 }
