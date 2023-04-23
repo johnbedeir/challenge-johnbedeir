@@ -1,3 +1,6 @@
 venv/
 mysql/
 .history/
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
