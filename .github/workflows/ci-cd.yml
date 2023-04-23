@@ -53,6 +53,6 @@ jobs:
         uses: aws-actions/amazon-s3-upload@v2
         with:
           aws-region: eu-central-1
-          bucket-name: terraform-bucket
+          bucket-name: tfstate-comforte-prod
           path: ./terraform/terraform.tfstate
           key: comforte-prod-terraform-state.tfstate
