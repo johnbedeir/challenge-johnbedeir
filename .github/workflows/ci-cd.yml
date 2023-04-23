@@ -50,9 +50,8 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Push Terraform state file to S3 bucket
-        uses: aws-actions/amazon-s3-upload@v2
+        uses: aws-actions/amazon-s3-cp@v2
         with:
           aws-region: eu-central-1
-          bucket-name: tfstate-comforte-prod
-          path: ./terraform/terraform.tfstate
-          key: comforte-prod-terraform-state.tfstate
+          source: ./terraform/terraform.tfstate
+          destination: s3://tfstate-comforte-prod/comforte-prod-terraform-state.tfstate
