@@ -228,11 +228,6 @@ data "aws_iam_policy_document" "cluster_autoscaler" {
   }
 }
 
-resource "kubernetes_namespace" "cluster_system" {
-  metadata {
-    name = "cluster-system"
-  }
-}
 resource "helm_release" "cluster-autoscaler" {
   name             = "cluster-autoscaler"
   namespace        = local.autoscaler_service_account_namespace
