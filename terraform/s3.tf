@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3" {
-  bucket = "terraform-bucket"
+  bucket = "tfstate-comforte-prod"
 
   tags = {
     Environment = "production"
