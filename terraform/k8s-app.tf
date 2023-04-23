@@ -31,11 +31,6 @@ resource "kubernetes_deployment" "app_deployment" {
           }
 
           env {
-            name  = "DATABASE_URL"
-            value = "mysql+pymysql://root:${random_password.mysql_root_password.result}@mysqldb:3306/myapp_db"
-          }
-
-          env {
             name = "MYSQL_PASSWORD"
             value_from {
               secret_key_ref {
