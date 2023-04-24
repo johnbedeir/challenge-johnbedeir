@@ -70,10 +70,13 @@ resource "kubernetes_service" "app_service" {
   }
 }
 
-resource "kubernetes_ingress" "app_ingress" {
+resource "kubernetes_ingress_v1" "app_ingress" {
   metadata {
     name      = "app-ingress"
     namespace = "default"
+    annotations = {
+      "kubernetes.io/ingress.class" = "nginx"
+    }
   }
 
   spec {
@@ -82,12 +85,22 @@ resource "kubernetes_ingress" "app_ingress" {
 
       http {
         path {
+          path      = "/(.*)"
+          path_type = "Prefix"
+
           backend {
-            service_name = kubernetes_service.app_service.metadata.0.name
-            service_port = 8080
+            service {
+              name = kubernetes_service.app_service.metadata[0].name
+              port {
+                number = 8080
+              }
+            }
           }
         }
       }
     }
   }
 }
+
+
+

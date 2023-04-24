@@ -155,7 +155,6 @@ module "eks" {
   }
 }
 
-
 module "eks_auth" {
   source = "aidanmelen/eks-auth/aws"
   eks    = module.eks
