@@ -52,8 +52,8 @@ jobs:
       - name: Download Terraform state file
         uses: actions/download-artifact@v2
         with:
-          name: terraform-state
-          path: terraform/terraform-state
+          name: terraform.tfstate
+          path: terraform/terraform.tfstate
 
       # - name: Set up Terraform
       #   uses: hashicorp/setup-terraform@v1
