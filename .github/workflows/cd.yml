@@ -35,8 +35,8 @@ jobs:
         working-directory: ./terraform
         run: terraform apply -auto-approve
 
-      - name: Push Terraform state file to S3 bucket
-        uses: aws-actions/amazon-s3-cp@v2
-        with:
-          source: ./terraform/terraform.tfstate
-          destination: s3://tfstate-comforte-prod/comforte-prod-terraform-state.tfstate
+      # - name: Push Terraform state file to S3 bucket
+      #   uses: aws-actions/amazon-s3-cp@v2
+      #   with:
+      #     source: ./terraform/terraform.tfstate
+      #     destination: s3://tfstate-comforte-prod/comforte-prod-terraform-state.tfstate
