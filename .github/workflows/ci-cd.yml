@@ -60,6 +60,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd terraform
+          terraform init
           terraform destroy -auto-approve
 
       # - name: Set Terraform variables and Apply
