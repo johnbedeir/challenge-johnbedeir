@@ -42,6 +42,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.7
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -51,12 +56,7 @@ jobs:
 
       - name: Upload Terraform state file to S3
         run: |
-          aws s3 cp ./terraform.tfstate s3://tfstate-comforte-prod/terraform.tfstate
-
-      # - name: Set up Terraform
-      #   uses: hashicorp/setup-terraform@v1
-      #   with:
-      #     terraform_version: 1.0.7
+          aws s3 cp ./terraform.tfstate s3://t/terraform.tfstate
 
       # - name: Set Terraform variables and Apply
       #   env:
