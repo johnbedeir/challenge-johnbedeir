@@ -35,8 +35,8 @@ jobs:
   #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
   #         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-  push-state-to-s3:
-    name: Push State to S3
+  destroy:
+    name: Terraform Destroy
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -54,17 +54,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
 
-      - name: Upload Terraform state file to S3
+      - name: Set Terraform variables and Apply
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp ./.terraform/terraform.tfstate s3://tfstate-comforte-prod/terraform.tfstate
-
-      # - name: Set Terraform variables and Apply
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #   run: |
-      #     cd terraform
-      #     terraform destroy -auto-approve
+          cd terraform
+          terraform destroy -auto-approve
 
       # - name: Set Terraform variables and Apply
       #   env:
