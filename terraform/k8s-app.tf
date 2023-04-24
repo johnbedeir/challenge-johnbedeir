@@ -23,7 +23,7 @@ resource "kubernetes_deployment" "app_deployment" {
       spec {
         container {
           name  = "app"
-          image = aws_ecr_repository.ecr_repo.name
+          image = "702551696126.dkr.ecr.eu-central-1.amazonaws.com/comforte-img:latest"
 
           env {
             name  = "FLASK_ENV"
