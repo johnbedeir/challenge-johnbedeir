@@ -52,7 +52,7 @@ jobs:
       - name: List artifacts
         run: |
           echo "Available artifacts:"
-          ls ${{ github.workspace }}/artifacts
+          ls $GITHUB_WORKSPACE/artifacts
 
       # - name: Set up Terraform
       #   uses: hashicorp/setup-terraform@v1
