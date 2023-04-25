@@ -132,7 +132,7 @@ When you do that you will be asked to switch your **tfstate** file from **local*
 
 Now you can run the **cd.yml** which will fetch the **tfstate** from the **s3**
 
-`NOTE: The CD workflow can be triggered manually on a new release`
+`NOTE: The CD workflow can be triggered manually, on push to the main branch or on a new release`
 
 ### Another option by using ArgoCD:
 
