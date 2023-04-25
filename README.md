@@ -112,11 +112,20 @@ This will display the hostname of the nginx-ingress controller, where you can ac
 
 ## GitOps
 
+### Using GitHub Actions Workflow
+
 Finally, to be able to run the CI-CD Workflow, you need to add the following in your GitHub Secrets:
 
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
-- S3_BUCKET_NAME
+
+`NOTE: The CD workflow will can be triggered manually or on a new release`
+
+### Another option by using ArgoCD:
+
+`This option is working but it is disabled since we are using GitHub Actions for CD`
+
+You can check the code in **argo.tf** which will deploy ArgoCD
 
 ## Built With
 
