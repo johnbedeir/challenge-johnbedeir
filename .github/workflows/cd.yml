@@ -28,12 +28,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.7
-          backend-config: |
-            {
-              "bucket": "tfstate-comforte-prod",
-              "key": "terraform-state/terraform.tfstate",
-              "region": "eu-central-1"
-            }
 
       - name: Set Terraform variables and Apply
         env:
