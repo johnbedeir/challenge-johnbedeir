@@ -2,5 +2,8 @@ venv/
 mysql/
 .history/
 .terraform/
-.terraform.lock.hcl
-terraform.tfstate
+.terraform.*
+*.tfstate
+*.tfstate.backup
+github_token.txt
+k8s/

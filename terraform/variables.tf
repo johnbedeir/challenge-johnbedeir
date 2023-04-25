@@ -1,3 +1,13 @@
+variable "aws_access_key" {
+  type    = string
+  default = ""
+}
+
+variable "aws_secret_key" {
+  type    = string
+  default = ""
+}
+
 variable "name_prefix" {
   type        = string
   default     = "comforte-1"

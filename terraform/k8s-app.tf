@@ -23,7 +23,7 @@ resource "kubernetes_deployment" "app_deployment" {
       spec {
         container {
           name  = "app"
-          image = aws_ecr_repository.ecr_repo.name
+          image = "702551696126.dkr.ecr.eu-central-1.amazonaws.com/comforte-img:latest"
 
           env {
             name  = "FLASK_ENV"
@@ -31,18 +31,8 @@ resource "kubernetes_deployment" "app_deployment" {
           }
 
           env {
-            name  = "DATABASE_URL"
-            value = "mysql+pymysql://root:${random_password.mysql_root_password.result}@mysqldb:3306/myapp_db"
-          }
-
-          env {
-            name = "MYSQL_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret.mysql_root_password.metadata.0.name
-                key  = "MYSQL_ROOT_PASSWORD"
-              }
-            }
+            name  = "MYSQL_PASSWORD"
+            value = base64decode(kubernetes_secret.mysql_root_password.data["MYSQL_ROOT_PASSWORD"])
           }
 
           port {
@@ -75,10 +65,13 @@ resource "kubernetes_service" "app_service" {
   }
 }
 
-resource "kubernetes_ingress" "app_ingress" {
+resource "kubernetes_ingress_v1" "app_ingress" {
   metadata {
     name      = "app-ingress"
     namespace = "default"
+    annotations = {
+      "kubernetes.io/ingress.class" = "nginx"
+    }
   }
 
   spec {
@@ -87,12 +80,22 @@ resource "kubernetes_ingress" "app_ingress" {
 
       http {
         path {
+          path      = "/"
+          path_type = "Prefix"
+
           backend {
-            service_name = kubernetes_service.app_service.metadata.0.name
-            service_port = 8080
+            service {
+              name = kubernetes_service.app_service.metadata[0].name
+              port {
+                number = 8080
+              }
+            }
           }
         }
       }
     }
   }
 }
+
+
+
