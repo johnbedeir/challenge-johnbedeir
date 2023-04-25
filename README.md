@@ -1,4 +1,4 @@
-# Project Name
+# Challenge-JohnBedeir
 
 **Description:** This project is built with Terraform that deploys a simple Python web page application using Flask and connects to a MySQL database where you can add data into the database and it appears on the webpage. The application is deployed on a scalable EKS cluster with minimum one node and maximum three nodes, along with other resources like ECR, S3 bucket, MySQL database, and nginx-ingress.
 
