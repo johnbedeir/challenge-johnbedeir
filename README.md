@@ -11,6 +11,7 @@
 - [Deployment](#deployment)
 - [GitOps](#gitops)
 - [Built With](#built-with)
+- [The Reasons for Technology Stack Selection](#the-reasons-for-technology-stack-selection)
 
 ## Getting Started
 
@@ -59,19 +60,23 @@ This will create a Database, Table and Insert the data that will be viewed by th
 
 ## Deployment
 
-To deploy this project, you can run the script **deploy.sh** that will do the following:
+#### Add the following in your GitHub Secrets:
 
-First, run Terraform to create the ECR repository:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+
+`NOTE: Make sure you disable the` **backend.tf** `while you run the first deployment`
+
+### 1. Create the ECR:
 
 ```
+cd terraform
 terraform -target=aws_ecr_repository.ecr_repo -auto-approve
 ```
 
-This will create an ECR repository where you can push the Docker image.
+### 2. Run the CI Workflow:
 
-Next, trigger the Github Actions workflow to build and push the Docker image to the ECR using the following command:
-
-`NOTE: Make sure you create a github access token and add it in a file that will be ignored by git also update the variables in the script`
+`NOTE: To Run this command make sure you create a github access token and add it in a file that will be ignored by git also update the variables in the script`
 
 ```
 curl -X POST https://api.github.com/repos/$username/$reponame/actions/workflows/$workflow_id/dispatches \
@@ -80,9 +85,10 @@ curl -X POST https://api.github.com/repos/$username/$reponame/actions/workflows/
 -d '{"ref": "$branch", "inputs": {}}'
 ```
 
-After the Docker image has been pushed, the script will run Terraform to create the remaining resources:
+### 3. Create EKS and Deploy the App:
 
 ```
+cd terraform
 terraform apply -auto-approve
 ```
 
@@ -92,15 +98,15 @@ This will create an EKS cluster, an S3 bucket to store the Terraform state file,
 comforte.johnydev.com
 ```
 
-Wait for at least 60 seconds to allow all the resources to be created and configured.
+### 4. Cluster Info:
 
-Next, push the Terraform state file to the S3 bucket:
+Update your **Kube Config**
 
 ```
-aws s3 cp $tfstate_name s3://$s3/$s3_dir/$tfstate_name --region $region
+aws eks update-kubeconfig --region $region --name $cluster_name
 ```
 
-Reveal the ingress URL:
+Reveal the **Ingress URL**
 
 ```
 kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
@@ -114,12 +120,19 @@ This will display the hostname of the nginx-ingress controller, where you can ac
 
 ### Using GitHub Actions Workflow
 
-Finally, to be able to run the CI-CD Workflow, you need to add the following in your GitHub Secrets:
+Finally, to be able to run the CD Workflow, you need to do the following:
 
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
+`NOTE: Make sure the **backend.tf** is not commented`
 
-`NOTE: The CD workflow will can be triggered manually or on a new release`
+```
+terraform init
+```
+
+When you do that you will be asked to switch your **tfstate** file from **local** state to the **s3**
+
+Now you can run the **cd.yml** which will fetch the **tfstate** from the **s3**
+
+`NOTE: The CD workflow can be triggered manually on a new release`
 
 ### Another option by using ArgoCD:
 
@@ -134,3 +147,13 @@ You can check the code in **argo.tf** which will deploy ArgoCD
 - Terraform - infrastructure as code tool
 - AWS - cloud computing platform
 - GitHub Actions - continuous integration and delivery platform
+
+## The Reasons for Technology Stack Selection
+
+Beside that I have the most experience in those tools
+
+- Flask: For its simplicity and Faster development for smaller projects, the alternative approach is by using Django
+- MySQL: It is one of the most popular open-source databases, which ensures a large and active community, another approach I could use MongoDB, I have similar experience in
+- Terraform: as the IaC tool for its ability to manage and provision cloud resources in a declarative and version-controlled manner. With its support for multiple cloud providers, another approach I could use Pulumi but I have less experience in.
+- AWS: Because of its comprehensive range of services, global infrastructure, and strong support for scalability and security.
+- GitHub Actions: This was chosen as the continuous integration and continuous delivery (CI/CD) platform for its native integration with GitHub repositories and ease of use, another alternatives I could use Jenkins or Azure DevOps (similar experience)
