@@ -6,4 +6,3 @@ mysql/
 *.tfstate
 *.tfstate.backup
 github_token.txt
-k8s/

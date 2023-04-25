@@ -10,6 +10,7 @@
 - [Usage](#usage)
 - [Deployment](#deployment)
 - [GitOps](#gitops)
+- [Another Approach](#another-approach)
 - [Built With](#built-with)
 - [The Reasons for Technology Stack Selection](#the-reasons-for-technology-stack-selection)
 
@@ -139,6 +140,12 @@ Now you can run the **cd.yml** which will fetch the **tfstate** from the **s3**
 `This option is working but it is disabled since we are using GitHub Actions for CD`
 
 You can check the code in **argo.tf** which will deploy ArgoCD
+
+## Another Approach:
+
+Another and more easier approach is to deploy the Application, Database and Ingress using Kubernetes manifest files, which already exists in this project but disabled since we run everything using Terraform.
+
+In that case we would run `terraform apply` then run the `CI-Workflow` that will build and push the Docker Image to the `ECR` then run the `CD-Workflow` after adjusting it to run `kubectl` commands instead of `terraform` that will deploy the application using the pushed Docker `Image`
 
 ## Built With
 
