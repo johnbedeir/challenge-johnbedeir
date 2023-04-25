@@ -31,13 +31,8 @@ resource "kubernetes_deployment" "app_deployment" {
           }
 
           env {
-            name = "MYSQL_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret.mysql_root_password.metadata.0.name
-                key  = "MYSQL_ROOT_PASSWORD"
-              }
-            }
+            name  = "MYSQL_PASSWORD"
+            value = base64decode(kubernetes_secret.mysql_root_password.data["MYSQL_ROOT_PASSWORD"])
           }
 
           port {
