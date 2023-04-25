@@ -40,7 +40,7 @@ deploy:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: eu-central-1
-        S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        S3_BUCKET_NAME: tfstate-comforte-prod
         S3_DIR: terraform-state
       run: |
         cd terraform

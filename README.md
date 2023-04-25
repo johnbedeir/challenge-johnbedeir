@@ -9,8 +9,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Deployment](#deployment)
+- [GitOps](#gitops)
 - [Built With](#built-with)
-- [License](#license)
 
 ## Getting Started
 
@@ -100,7 +100,7 @@ Next, push the Terraform state file to the S3 bucket:
 aws s3 cp $tfstate_name s3://$s3/$s3_dir/$tfstate_name --region $region
 ```
 
-Finally, reveal the ingress URL:
+Reveal the ingress URL:
 
 ```
 kubectl get svc nginx-ingress-ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
@@ -110,9 +110,18 @@ This will display the hostname of the nginx-ingress controller, where you can ac
 
 `NOTE: You will need to add this URL in CNAME record for your domain`
 
+## GitOps
+
+Finally, to be able to run the CI-CD Workflow, you need to add the following in your GitHub Secrets:
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- S3_BUCKET_NAME
+
 ## Built With
 
 - Flask - Python web framework
 - MySQL - relational database management system
 - Terraform - infrastructure as code tool
 - AWS - cloud computing platform
+- GitHub Actions - continuous integration and delivery platform
