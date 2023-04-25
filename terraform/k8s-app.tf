@@ -80,7 +80,7 @@ resource "kubernetes_ingress_v1" "app_ingress" {
 
       http {
         path {
-          path      = "/(.*)"
+          path      = "/"
           path_type = "Prefix"
 
           backend {
