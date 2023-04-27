@@ -9,7 +9,7 @@ spec:
     - host: comforte.johnydev.com
       http:
         paths:
-          - path: /path
+          - path: /
             pathType: Prefix
             backend:
               service:
