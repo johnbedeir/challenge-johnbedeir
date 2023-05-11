@@ -22,11 +22,10 @@ spec:
           env:
             - name: FLASK_ENV
               value: production
+            - name: MYSQL_HOST
+              value: mysqldb
             - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-root-password
-                  key: MYSQL_ROOT_PASSWORD
+              value: secret
 ---
 apiVersion: v1
 kind: Service
